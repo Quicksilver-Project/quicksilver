@@ -17,6 +17,21 @@ class Configuration():
                 "XmiVersion": "2.5.1",
     }
 
+    @classmethod
+    def readSetting(cls, section, item, default):
+        result = default
+        try:
+            if isinstance(default, bool):
+                result = cls.ConfigParser.getboolean(section, item)
+            elif isinstance(default, int):
+                result = cls.ConfigParser.getint(section, item)
+            else:
+                result = cls.ConfigParser.get(section, item)
+        except:
+            pass
+        finally:
+            return result
+
     #TODO: make self-contained tool to manage Modeling components.
 
     @classmethod
