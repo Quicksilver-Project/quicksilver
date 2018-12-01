@@ -7,12 +7,9 @@ import os
 import sys
 run_Path = os.path.dirname(os.path.realpath(__file__))
 
-import configparser
 import json
     
 class Configuration():
-    ConfigParser = configparser.ConfigParser()
-    ConfigParser.read(os.path.join(run_Path, "../etc/config.ini"))
     default = {
                 "UmlBaseUrl": "https://www.omg.org/spec/UML/",
                 "UmlVersion": "2.5.1",
@@ -20,23 +17,8 @@ class Configuration():
                 "XmiVersion": "2.5.1",
     }
 
-    @classmethod
-    def readSetting(cls, section, item, default):
-        result = default
-        try:
-            if isinstance(default, bool):
-                result = cls.ConfigParser.getboolean(section, item)
-            elif isinstance(default, int):
-                result = cls.ConfigParser.getint(section, item)
-            else:
-                result = cls.ConfigParser.get(section, item)
-        except:
-            pass
-        finally:
-            return result
-
     #TODO: make self-contained tool to manage Modeling components.
-    
+
     @classmethod
     def getUMLBaseUrl(cls) -> str:
         return cls.readSetting("UML", "baseUrl", cls.default["UmlBaseUrl"])
