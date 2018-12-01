@@ -363,5 +363,36 @@
                 }
             }
         }
+    },
+    "XMI": {
+        "baseUrl": "https://www.omg.org/spec/XMI",
+        "latest": "2.5.1",
+        "data": {
+            "2.5.1": {
+                "20110501": {
+                    "ad/11-05-24": {
+                        "explanation": ["XML Schema for Canonical XMI: XMI-Canonical.xsd"],
+                        "filename": ["XMI-Canonical.xsd"],
+                        "format": "XSD"
+                    }
+                },
+                "20131001": {
+                    "ptc/14-08-14": {
+                        "explanation": ["XMI-model.xmi", "XMI.xsd"],
+                        "filename": ["XMI-model.xmi", "XMI.xsd"],
+                        "format": ["XMI", "XSD"]
+                    }
+                }
+            },
+            "2.1.1": {
+                "20071001": {
+                    "ptc/07-10-06": {
+                        "explanation": ["XMI.xsd file circulated by Pete Rivett in email dated Mon, 1 Oct 2007 02:06:38 -0700 as a proposed partial resolution of issue 9512."],
+                        "filename": null,
+                        "format": "XMI"
+                    }
+                }
+            }
+        }
     }
 }

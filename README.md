@@ -1,2 +1,2 @@
 # quicksilver
-An automated UML 2.5 diagramming tool written in python. WIP
+Agnostic code analyzer that generates resourceful UML-based diagrams. WIP

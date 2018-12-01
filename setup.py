@@ -12,7 +12,7 @@ def get_long_description() -> str:
 setup(
     name="quicksilver",
     version="Planning",
-    description="Agnostic Code Analyzer that generates useful UML-like diagrams",
+    description="Agnostic code analyzer that generates resourceful UML-based diagrams",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
     keywords="uml automation",
