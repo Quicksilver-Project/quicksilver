@@ -1,3 +1,10 @@
+#VS Code
+.vscode/
+
+# XMI data files
+*.xmi
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
