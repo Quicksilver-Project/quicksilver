@@ -2,6 +2,7 @@
 # Copyright 2018 (C) Logan Campos - @binaryflesh
 #
 # imports
+import json
 import os
 import sys
 import requests
@@ -9,15 +10,6 @@ import urllib3
 
 # Annoying warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-# cheap way to get back to root.
-#TODO: make this a python package
-
-run_Path = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(run_Path, ".."))
-
-from lib.config import Configuration
-CONF = Configuration()
 
 class Setup():
     """
@@ -27,21 +19,31 @@ class Setup():
     def __init__(self, specs=["UML", "XMI"]):
         # temporary. need to make a smart tool to manage this.
         self.urls = []
+        self.data = self.getMetadata()
         for _, spec in enumerate(specs):
-            if spec == "UML":
-                self.version = CONF.getUMLVersion()
-                self.baseUrl = CONF.getUMLBaseUrl()
-                self.dataset = CONF.getUMLDataset()[spec]["data"][self.version]
-                if self.Download_Source():
-                    print(f"[+] {spec}-{self.version} has been successfully downloaded.")
-            elif spec == "XMI":
-                self.version = CONF.getXMIVersion()
-                self.baseUrl = CONF.getXMIBaseUrl()
-                self.dataset = CONF.getXMIDataset()[spec]["data"][self.version]
-                if self.Download_Source():
-                    print(f"[+] {spec}-{self.version} has been successfully downloaded.")
+            _version = self.conf[spec]["Version"]
+            self.dataset = self.data[spec]["data"][_version]
+            if self.getResource():
+                print(f"[+] {spec}-{_version} has been successfully downloaded.")
 
-    def Download_Source(self) -> bool:
+    def getMetadata(self) -> dict:
+        data = None
+        with open("../etc/sources.json") as f:
+            data = json.load(f)
+            f.close()
+        self.conf = {
+            "UML": {
+                "Version": data["UML"]["latest"],
+                "BaseUrl": data["UML"]["baseUrl"],
+            },
+            "XMI": { 
+                "Version": data["XMI"]["latest"],
+                "BaseUrl": data["XMI"]["baseUrl"],
+            }
+        }
+        return data
+
+    def getResource(self) -> bool:
         try:
             url = self.baseUrl
             for key, value in self.dataset.items():
