@@ -41,7 +41,7 @@ class Configuration():
     @classmethod
     def parseUMLdataset(cls) -> dict:
         data = None
-        with open("../etc/sources.json") as f:
+        with open("../etc/uml_sources.json") as f:
             data = json.load(f)
             f.close()
         return data
