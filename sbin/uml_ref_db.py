@@ -6,6 +6,8 @@ import os
 import sys
 import requests
 
+from lxml import etree
+
 # cheap way to get back to root.
 #TODO: make this a python package
 
@@ -22,18 +24,20 @@ class Setup(Configuration):
     def __init__(self):
         self.conf = Configuration()
         self.version = self.conf.getUMLVersion()
-        self.dataset = self.conf.parseUMLdataset()["UML"]["data"][self.version]
+        self.dataset = self.conf.getUMLDataset()["UML"]["data"][self.version]
         self.urls = []
         self.buildUrls(self.dataset)
         self.downloadDatafiles(urls=self.urls)
+        self.processXML("../data/UML/2.5.1/StandardProfile.xmi")
 
     def buildUrls(self, data) -> list:
         url = self.conf.getUMLBaseUrl()
         for key, value in data.items():
-            url += f"/{key}" #/yyyymmdd
+            url += f"/{key}" # /yyyymmdd
             for k, v in value.items():
+                # document does not have a filename. the yyyymmdd indicator is the filename.
                 if v == None:
-                    _filename = v #document does not have a filename. the URI is key
+                    _filename = v 
                 if isinstance(v, list):
                     # same document, multiple attachments
                     if len(v["filename"]) > 1:
@@ -55,6 +59,12 @@ class Setup(Configuration):
                 open(f"../data/UML/{self.version}/{_filename}", "wb").write(r.content)
                 print(f"[+] {_filename} saved in quicksilver/data. ")
         print(f"[+] All data sources locally accessable.")
+
+    def processXML(self, path_to_data=str) -> dict:
+        _xml = open(path_to_data).read()
+        root = etree.Element(_xml)
+        for name, value in sorted(root.items()):
+            print(f"{name} = {value}")
 
 if __name__ == "__main__":
     Setup()

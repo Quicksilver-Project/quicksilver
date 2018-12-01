@@ -13,7 +13,12 @@ import json
 class Configuration():
     ConfigParser = configparser.ConfigParser()
     ConfigParser.read(os.path.join(run_Path, "../etc/config.ini"))
-    default = {"UmlBaseUrl": "https://www.omg.org/spec/UML/", "UmlVersion": "2.5.1"}
+    default = {
+                "UmlBaseUrl": "https://www.omg.org/spec/UML/",
+                "UmlVersion": "2.5.1",
+                "XmiBaseUrl": "https://www.omg.org/spec/XMI/",
+                "XmiVersion": "2.5.1",
+    }
 
     @classmethod
     def readSetting(cls, section, item, default):
@@ -30,6 +35,8 @@ class Configuration():
         finally:
             return result
 
+    #TODO: make self-contained tool to manage Modeling components.
+    
     @classmethod
     def getUMLBaseUrl(cls) -> str:
         return cls.readSetting("UML", "baseUrl", cls.default["UmlBaseUrl"])
@@ -39,9 +46,25 @@ class Configuration():
         return cls.readSetting("UML", "version", cls.default["UmlVersion"])
 
     @classmethod
-    def parseUMLdataset(cls) -> dict:
+    def getUMLDataset(cls) -> dict:
         data = None
         with open("../etc/uml_sources.json") as f:
+            data = json.load(f)
+            f.close()
+        return data
+    
+    @classmethod
+    def getXMIBaseUrl(cls) -> str:
+        return cls.readSetting("XMI", "baseUrl", cls.default["XmiBaseUrl"])
+    
+    @classmethod
+    def getXMIVersion(cls) -> str:
+        return cls.readSetting("XMI", "version", cls.default["XmiVersion"])
+    
+    @classmethod
+    def getXMIDataset(cls) -> dict:
+        data = None
+        with open("../etc/xmi_sources.json") as f:
             data = json.load(f)
             f.close()
         return data
