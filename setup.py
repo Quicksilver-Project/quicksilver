@@ -11,11 +11,11 @@ def get_long_description() -> str:
 
 setup(
     name="quicksilver",
-    version="Planning",
-    description="Agnostic code analyzer that generates resourceful UML-based diagrams",
+    version="v0.0.1a",
+    description="Agnostic project analyzer that generates resourceful diagrams. WIP",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
-    keywords="uml automation",
+    keywords="productivity, software-analysis, analysis-of-information-systems, root-cause-analysis, software-analysis-and-modeling structural-analysis, wip, wip-do-not-use, software-composition-analysis"
     author="Logan Campos",
     author_email="logan.campos123@gmail.com",
     url="https://github.com/binaryflesh/quicksilver",
@@ -27,6 +27,5 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
-        "Topic :: Software Development :: Code Generators",
     ]
 )
